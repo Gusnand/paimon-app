@@ -1,7 +1,9 @@
 import * as React from "react";
-import { Text, TextInput, Button, View } from "react-native";
+import { Text, TextInput, Button, View, TouchableOpacity } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
+import { FontStyles } from "@/constants/Fonts";
+import { Colors } from "@/constants/Colors";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -80,28 +82,93 @@ export default function SignUpScreen() {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 24,
+      }}
+    >
       <>
-        <Text>Sign up</Text>
+        <Text style={{ ...FontStyles.quicksandHeaderPage, marginBottom: 24 }}>
+          Sign up
+        </Text>
         <TextInput
           autoCapitalize="none"
           value={username}
           placeholder="Enter username"
           onChangeText={(username) => setUsername(username)}
+          style={{
+            ...FontStyles.quicksand14Desc,
+            backgroundColor: "#ffffff",
+            borderRadius: 12,
+            padding: 12,
+            borderColor: "#AAAAAA",
+            borderWidth: 2,
+            borderStyle: "solid",
+            marginBottom: 12,
+            color: "#AAAAAA",
+            width: "100%",
+            display: "flex",
+            gap: 12,
+          }}
         />
         <TextInput
           autoCapitalize="none"
           value={emailAddress}
           placeholder="Enter email"
           onChangeText={(email) => setEmailAddress(email)}
+          style={{
+            ...FontStyles.quicksand14Desc,
+            backgroundColor: "#ffffff",
+            borderRadius: 12,
+            padding: 12,
+            borderColor: "#AAAAAA",
+            borderWidth: 2,
+            borderStyle: "solid",
+            marginBottom: 12,
+            color: "#AAAAAA",
+            width: "100%",
+            display: "flex",
+            gap: 12,
+          }}
         />
         <TextInput
           value={password}
           placeholder="Enter password"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
+          style={{
+            ...FontStyles.quicksand14Desc,
+            backgroundColor: "#ffffff",
+            borderRadius: 12,
+            padding: 12,
+            borderColor: "#AAAAAA",
+            borderWidth: 2,
+            borderStyle: "solid",
+            marginBottom: 12,
+            color: "#AAAAAA",
+            width: "100%",
+            display: "flex",
+            gap: 12,
+          }}
         />
-        <Button title="Continue" onPress={onSignUpPress} />
+        {/* <Button title="Continue" onPress={onSignUpPress} /> */}
+        <TouchableOpacity
+          onPress={() => {
+            onSignUpPress;
+          }}
+          style={{
+            backgroundColor: Colors.PRIMARY,
+            width: "100%",
+            borderRadius: 12,
+            padding: 12,
+            marginTop: 24,
+          }}
+        >
+          <Text style={FontStyles.quicksandButtonPrimary}>Bergabung</Text>
+        </TouchableOpacity>
       </>
     </View>
   );

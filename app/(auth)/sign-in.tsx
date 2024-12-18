@@ -41,7 +41,14 @@ export default function SignInScreen() {
   }, [isLoaded, emailAddress, password]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 24,
+      }}
+    >
       <TextInput
         autoCapitalize="none"
         value={emailAddress}
@@ -57,11 +64,8 @@ export default function SignInScreen() {
           borderStyle: "solid",
           marginBottom: 12,
           color: "#AAAAAA",
-          width: "90%",
+          width: "100%",
           display: "flex",
-          position: "relative",
-          paddingHorizontal: 24,
-          marginHorizontal: 12,
           gap: 12,
         }}
       />
@@ -80,11 +84,8 @@ export default function SignInScreen() {
           borderWidth: 2,
           borderStyle: "solid",
           marginBottom: 12,
-          width: "90%",
+          width: "100%",
           display: "flex",
-          position: "relative",
-          paddingHorizontal: 24,
-          marginHorizontal: 12,
           gap: 12,
         }}
       />
@@ -92,7 +93,7 @@ export default function SignInScreen() {
         style={{
           paddingBottom: 24,
           display: "flex",
-          width: "90%",
+          width: "100%",
           alignItems: "flex-end",
         }}
       >
@@ -114,7 +115,7 @@ export default function SignInScreen() {
         }}
         style={{
           backgroundColor: Colors.PRIMARY,
-          width: "90%",
+          width: "100%",
           borderRadius: 12,
           padding: 12,
         }}
