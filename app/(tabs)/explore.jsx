@@ -4,7 +4,7 @@ import { Tabs } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "@/constants/Colors";
 
-export default function TabLayout() {
+export default function explore() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: Colors.PRIMARY }}>
       <Tabs.Screen
