@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Text, TextInput, Button, View, TouchableOpacity } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { FontStyles } from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
+import Header from "@/components/Layout/Header";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -12,6 +13,7 @@ export default function SignUpScreen() {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [username, setUsername] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
 
@@ -25,6 +27,8 @@ export default function SignUpScreen() {
         emailAddress,
         username,
         password,
+        firstName: displayName,
+        lastName: "user",
       });
 
       // Send user an email with verification code
@@ -69,15 +73,70 @@ export default function SignUpScreen() {
 
   if (pendingVerification) {
     return (
-      <>
-        <Text>Verify your email</Text>
-        <TextInput
-          value={code}
-          placeholder="Enter your verification code"
-          onChangeText={(code) => setCode(code)}
-        />
-        <Button title="Verify" onPress={onVerifyPress} />
-      </>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+
+          marginHorizontal: 24,
+        }}
+      >
+        <>
+          <TextInput
+            style={{
+              ...FontStyles.quicksand14Desc,
+              backgroundColor: "#ffffff",
+              borderRadius: 12,
+              padding: 12,
+              borderColor: "#AAAAAA",
+              borderWidth: 2,
+              borderStyle: "solid",
+              marginBottom: 12,
+              color: "#AAAAAA",
+              width: "100%",
+              display: "flex",
+              gap: 12,
+            }}
+            value={code}
+            placeholder="Masukkan kode verifikasi"
+            onChangeText={(code) => setCode(code)}
+          />
+          <TouchableOpacity
+            onPress={onVerifyPress}
+            style={{
+              backgroundColor: Colors.PRIMARY,
+              width: "100%",
+              borderRadius: 12,
+              padding: 12,
+              marginTop: 24,
+            }}
+          >
+            <Text style={FontStyles.quicksandButtonPrimary}>
+              Kirim Kode Verikasi
+            </Text>
+          </TouchableOpacity>
+        </>
+        <View
+          style={{
+            position: "absolute",
+            top: 24,
+            display: "flex",
+            width: "100%",
+          }}
+        >
+          <Header headerText="Verifikasi" />
+          <Text
+            style={{
+              ...FontStyles.quicksandSemiBold,
+              color: Colors.Gray,
+              fontSize: 16,
+              marginTop: 8,
+            }}
+          >
+            Cek email anda untuk mendapatkan kode verifikasi
+          </Text>
+        </View>
+      </View>
     );
   }
 
@@ -87,13 +146,20 @@ export default function SignUpScreen() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        margin: 24,
+        marginHorizontal: 24,
       }}
     >
       <>
-        <Text style={{ ...FontStyles.quicksandHeaderPage, marginBottom: 24 }}>
-          Sign up
-        </Text>
+        <View
+          style={{
+            position: "absolute",
+            top: 24,
+            display: "flex",
+            width: "100%",
+          }}
+        >
+          <Header headerText="Bergabung" />
+        </View>
         <TextInput
           autoCapitalize="none"
           value={username}
@@ -119,6 +185,26 @@ export default function SignUpScreen() {
           value={emailAddress}
           placeholder="Email"
           onChangeText={(email) => setEmailAddress(email)}
+          style={{
+            ...FontStyles.quicksand14Desc,
+            backgroundColor: "#ffffff",
+            borderRadius: 12,
+            padding: 12,
+            borderColor: "#AAAAAA",
+            borderWidth: 2,
+            borderStyle: "solid",
+            marginBottom: 12,
+            color: "#AAAAAA",
+            width: "100%",
+            display: "flex",
+            gap: 12,
+          }}
+        />
+        <TextInput
+          autoCapitalize="none"
+          value={displayName}
+          placeholder="Nama Pengguna"
+          onChangeText={(displayName) => setDisplayName(displayName)}
           style={{
             ...FontStyles.quicksand14Desc,
             backgroundColor: "#ffffff",
@@ -167,6 +253,24 @@ export default function SignUpScreen() {
         >
           <Text style={FontStyles.quicksandButtonPrimary}>Bergabung</Text>
         </TouchableOpacity>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            position: "absolute",
+            bottom: 24,
+          }}
+        >
+          <Text style={{ ...FontStyles.quicksand14Desc }}>
+            Sudah punya akun?{" "}
+          </Text>
+          <Link href="/sign-in">
+            <Text style={{ ...FontStyles.quicksand14, color: Colors.PRIMARY }}>
+              {" "}
+              Masuk
+            </Text>
+          </Link>
+        </View>
       </>
     </View>
   );

@@ -6,6 +6,7 @@ import { FontStyles } from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
 import Header from "@/components/Layout/Header";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useUser } from "@clerk/clerk-expo";
 
 const buttonSettings = [
   {
@@ -22,6 +23,7 @@ const buttonSettings = [
 
 export default function profile() {
   const { signOut } = useClerk();
+  const { user } = useUser();
 
   const handleSignOut = async () => {
     try {
@@ -59,11 +61,11 @@ export default function profile() {
           />
           <View style={{ display: "flex", gap: 4 }}>
             <Text style={[FontStyles.quicksandBold, { fontSize: 18 }]}>
-              Eli{" "}
+              {user?.firstName || "User12356"}
               <Text
                 style={[
                   FontStyles.quicksandBold,
-                  { color: Colors.PRIMARY, fontSize: 14 },
+                  { color: Colors.PRIMARY, fontSize: 14, paddingLeft: 4 },
                 ]}
               >
                 ♀
@@ -75,7 +77,7 @@ export default function profile() {
                 { fontSize: 12, color: Colors.Gray },
               ]}
             >
-              @elikolu
+              @{user?.username}
             </Text>
           </View>
         </View>

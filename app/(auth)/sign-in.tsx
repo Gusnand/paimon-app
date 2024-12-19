@@ -4,6 +4,7 @@ import { Text, TextInput, Button, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 import { FontStyles } from "@/constants/Fonts";
+import Header from "@/components/Layout/Header";
 
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -46,9 +47,19 @@ export default function SignInScreen() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        margin: 24,
+        marginHorizontal: 24,
       }}
     >
+      <View
+        style={{
+          position: "absolute",
+          top: 24,
+          display: "flex",
+          width: "100%",
+        }}
+      >
+        <Header headerText="Masuk" />
+      </View>
       <TextInput
         autoCapitalize="none"
         value={emailAddress}

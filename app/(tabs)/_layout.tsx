@@ -10,7 +10,12 @@ export default function TabLayout() {
 
   if (isSignedIn) {
     return (
-      <Tabs screenOptions={{ tabBarActiveTintColor: Colors.PRIMARY }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors.PRIMARY,
+          headerShown: false,
+        }}
+      >
         <Tabs.Screen
           name="home"
           options={{
