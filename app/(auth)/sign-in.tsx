@@ -110,9 +110,7 @@ export default function SignInScreen() {
       </View>
       {/* <Button title="Sign in" onPress={onSignInPress} /> */}
       <TouchableOpacity
-        onPress={() => {
-          onSignInPress;
-        }}
+        onPress={onSignInPress}
         style={{
           backgroundColor: Colors.PRIMARY,
           width: "100%",
