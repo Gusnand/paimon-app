@@ -20,4 +20,5 @@ export const Colors = {
   },
   PRIMARY: "#F1737B",
   PRIMARYLighter: "#FEF1F2",
+  Gray: "#929CAD",
 };

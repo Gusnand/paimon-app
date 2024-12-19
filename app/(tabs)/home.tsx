@@ -14,7 +14,7 @@ export default function home() {
   return (
     <View style={{ margin: 24 }}>
       {/* header */}
-      <Header />
+      <Header headerText="Home" />
       <View
         style={{
           display: "flex",
