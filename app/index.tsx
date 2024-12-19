@@ -7,7 +7,7 @@ export default function Index() {
   const { user } = useUser();
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SignedIn>
         {/* <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />

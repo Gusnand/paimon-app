@@ -1,32 +1,20 @@
-import {
-  View,
-  Text,
-  Image,
-  Button,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { View, Text, Image, Button, TouchableOpacity } from "react-native";
 import React from "react";
 import { FontStyles } from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
 import { Link } from "expo-router";
 
 export default function LoginScreen() {
-  const onSignUp = async () => {
-    const url = "/sign-up";
-    await Linking.openURL(url);
-  };
-
-  const onSignIn = async () => {
-    const url = "/sign-in";
-    await Linking.openURL(url);
-  };
-
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
       <View
         style={{
           display: "flex",
+          flex: 1,
           alignItems: "center",
           justifyContent: "center",
           paddingBottom: 24,
@@ -59,24 +47,18 @@ export default function LoginScreen() {
         }}
       >
         <TouchableOpacity
-          onPress={() => {
-            onSignIn;
-          }}
           style={{
             backgroundColor: Colors.PRIMARY,
             borderRadius: 12,
             padding: 12,
           }}
         >
-          <Link href="/sign-in">
+          <Link href="/sign-in" style={{ textAlign: "center" }}>
             <Text style={FontStyles.quicksandButtonPrimary}>Masuk</Text>
           </Link>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => {
-            onSignUp;
-          }}
           style={{
             backgroundColor: "#FFFFFF",
             borderRadius: 12,
@@ -86,7 +68,9 @@ export default function LoginScreen() {
             borderStyle: "solid",
           }}
         >
-          <Text style={FontStyles.quicksandButtonSecondary}>Bergabung</Text>
+          <Link href="/sign-up" style={{ textAlign: "center" }}>
+            <Text style={FontStyles.quicksandButtonSecondary}>Bergabung</Text>
+          </Link>
         </TouchableOpacity>
       </View>
     </View>
