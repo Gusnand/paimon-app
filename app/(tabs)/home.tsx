@@ -4,6 +4,8 @@ import { FontStyles } from "@/constants/Fonts";
 import Header from "@/components/Layout/Header";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "@/constants/Colors";
+import WisataTerpopuler from "@/components/Home/WisataTerpopuler";
+import DaftarWisata from "@/components/Home/DaftarWisata";
 
 export default function home() {
   const [searchSelected, setSearchSelected] = useState(false);
@@ -43,48 +45,10 @@ export default function home() {
       </View>
 
       {/* statistik */}
-      <View style={{ marginVertical: 24 }}>
-        <Text style={[FontStyles.quicksandHeader2Page, { marginBottom: 16 }]}>
-          Wisata Terpopuler
-        </Text>
-        <View style={{ display: "flex", gap: 16 }}>
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 16,
-              paddingVertical: 24,
-              backgroundColor: Colors.PRIMARYLighter,
-              borderRadius: 12,
-              display: "flex",
-              gap: 2,
-            }}
-          >
-            <Text style={[FontStyles.quicksandBold, { fontSize: 24 }]}>
-              Jembatan Sakenan
-            </Text>
-            <Text style={[FontStyles.quicksandBold, { fontSize: 14 }]}>
-              Denpasar
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 16,
-              paddingVertical: 24,
-              backgroundColor: Colors.PRIMARYLighter,
-              borderRadius: 12,
-              display: "flex",
-              gap: 2,
-            }}
-          >
-            <Text style={[FontStyles.quicksandBold, { fontSize: 24 }]}>
-              Dharmanegara Alaya
-            </Text>
-            <Text style={[FontStyles.quicksandBold, { fontSize: 14 }]}>
-              Denpasar
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <WisataTerpopuler />
+
       {/* daftar wisata */}
+      <DaftarWisata />
     </View>
   );
 }
