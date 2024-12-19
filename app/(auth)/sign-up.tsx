@@ -156,9 +156,7 @@ export default function SignUpScreen() {
         />
         {/* <Button title="Continue" onPress={onSignUpPress} /> */}
         <TouchableOpacity
-          onPress={() => {
-            onSignUpPress;
-          }}
+          onPress={onSignUpPress}
           style={{
             backgroundColor: Colors.PRIMARY,
             width: "100%",
