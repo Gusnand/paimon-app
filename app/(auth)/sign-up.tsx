@@ -97,7 +97,7 @@ export default function SignUpScreen() {
         <TextInput
           autoCapitalize="none"
           value={username}
-          placeholder="Enter username"
+          placeholder="Username"
           onChangeText={(username) => setUsername(username)}
           style={{
             ...FontStyles.quicksand14Desc,
@@ -117,7 +117,7 @@ export default function SignUpScreen() {
         <TextInput
           autoCapitalize="none"
           value={emailAddress}
-          placeholder="Enter email"
+          placeholder="Email"
           onChangeText={(email) => setEmailAddress(email)}
           style={{
             ...FontStyles.quicksand14Desc,
@@ -136,7 +136,7 @@ export default function SignUpScreen() {
         />
         <TextInput
           value={password}
-          placeholder="Enter password"
+          placeholder="Password"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
           style={{
