@@ -1,4 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import { FontStyles } from "@/constants/Fonts";
 import Header from "@/components/Layout/Header";
@@ -12,7 +18,11 @@ export default function home() {
   const [searchField, setSearchField] = useState("");
 
   return (
-    <View style={{ margin: 24 }}>
+    <ScrollView
+      style={{ flex: 1, margin: 24 }}
+      contentContainerStyle={{ paddingBottom: 24 }}
+      showsVerticalScrollIndicator={false}
+    >
       {/* header */}
       <Header />
       <View
@@ -49,6 +59,6 @@ export default function home() {
 
       {/* daftar wisata */}
       <DaftarWisata />
-    </View>
+    </ScrollView>
   );
 }
