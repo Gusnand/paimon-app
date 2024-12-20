@@ -27,9 +27,8 @@ export default function LoginScreen() {
             height: 300,
           }}
         />
+        <Text style={[FontStyles.quicksandTitle]}>Selamat Datang di</Text>
         <Text style={[FontStyles.quicksandTitle, { marginBottom: 4 }]}>
-          Selamat Datang di
-          <br />
           Paimon!
         </Text>
         <Text style={[FontStyles.quicksand14Desc, { textAlign: "center" }]}>
