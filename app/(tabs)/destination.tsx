@@ -7,34 +7,7 @@ import * as Location from "expo-location";
 import { FontStyles } from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
 import { Link } from "expo-router";
-
-const daftarWisata = [
-  {
-    image: require("../../assets/images/tourism/1.pantaikuta.jpg"),
-    namatempat: "Pantai Kuta",
-    detail: "lorem ipsum dolor sit amet",
-    location: { latitude: -8.722579, longitude: 115.169608 },
-  },
-  {
-    image: require("../../assets/images/tourism/2.pantaipandawa.jpg"),
-    namatempat: "Pantai Pandawa",
-    detail: "lorem ipsum dolor sit amet",
-    location: { latitude: -8.8447868, longitude: 115.1762258 },
-  },
-
-  {
-    image: require("../../assets/images/tourism/3.bajrasandhi.jpg"),
-    namatempat: "Bajra Sandhi",
-    detail: "lorem ipsum dolor sit amet",
-    location: { latitude: -8.6717295, longitude: 115.2313271 },
-  },
-  {
-    image: require("../../assets/images/tourism/4.artcenter.jpg"),
-    namatempat: "Art Center",
-    detail: "lorem ipsum dolor sit amet",
-    location: { latitude: -8.6556162, longitude: 115.2312965 },
-  },
-];
+import { supabase } from "@/utils/supabase";
 
 export default function destination() {
   const { user } = useUser();
@@ -42,9 +15,10 @@ export default function destination() {
   const [showDestinationModal, setShowDestinationModal] = useState(false);
   const [selectedDestination, setSelectedDestination] = useState({
     image: require("../../assets/images/tourism/3.bajrasandhi.jpg"),
-    namatempat: "",
+    namawisata: "",
     detail: "",
-    location: { latitude: 0, longitude: 0 },
+    latitude: 0,
+    longitude: 0,
   });
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 0,
@@ -55,7 +29,6 @@ export default function destination() {
 
   useEffect(() => {
     const getLocation = async () => {
-      setIsLoading(true);
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === "granted") {
@@ -73,10 +46,26 @@ export default function destination() {
         console.error("Error getting location:", error);
       }
       setShowDestinationModal(false);
+    };
+
+    const getDestinations = async () => {
+      setIsLoading(true);
+      getLocation();
+      const { data, error } = await supabase.from("daftarwisata").select();
+
+      if (error) {
+        setFetchError("Could not fetch from database");
+        console.log(error);
+      }
+      if (data) {
+        setDestinations(data);
+        setFetchError("");
+        console.log(data);
+      }
       setIsLoading(false);
     };
 
-    getLocation();
+    getDestinations();
   }, []);
 
   //location debugging purposes
@@ -85,7 +74,7 @@ export default function destination() {
   };
 
   const showDestinations = () => {
-    return daftarWisata.map((destination, index) => {
+    return destinations.map((destination: any, index: number) => {
       return (
         <Marker
           onPress={() => {
@@ -93,13 +82,17 @@ export default function destination() {
             setShowDestinationModal(true);
           }}
           key={index}
-          coordinate={destination.location}
-          title={destination.namatempat}
-          description={destination.detail}
+          coordinate={{
+            latitude: destination.latitude,
+            longitude: destination.longitude,
+          }}
         />
       );
     });
   };
+
+  const [fetchError, setFetchError] = useState("");
+  const [destinations, setDestinations] = useState<any>([]);
 
   return (
     <>
@@ -146,6 +139,7 @@ export default function destination() {
                 backgroundColor: "white",
                 alignSelf: "center",
                 minWidth: "50%",
+                maxWidth: "65%",
                 display: "flex",
                 alignItems: "center",
                 gap: 4,
@@ -158,7 +152,7 @@ export default function destination() {
                   fontSize: 16,
                 }}
               >
-                {selectedDestination.namatempat}
+                {selectedDestination.namawisata}
               </Text>
               <Text
                 style={{
@@ -167,7 +161,7 @@ export default function destination() {
                   fontSize: 14,
                 }}
               >
-                {selectedDestination.detail}
+                {selectedDestination.detail.substring(0, 20)}...
               </Text>
               <View style={{ display: "flex", flexDirection: "row", gap: 6 }}>
                 <TouchableOpacity

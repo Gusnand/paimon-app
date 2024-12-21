@@ -12,10 +12,12 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "@/constants/Colors";
 import WisataTerpopuler from "@/components/Home/WisataTerpopuler";
 import DaftarWisata from "@/components/Home/DaftarWisata";
+import { supabase } from "@/utils/supabase";
 
 export default function home() {
   const [searchSelected, setSearchSelected] = useState(false);
   const [searchField, setSearchField] = useState("");
+  // console.log(supabase);
 
   return (
     <ScrollView
