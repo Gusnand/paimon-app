@@ -120,7 +120,7 @@ export default function DaftarWisata() {
                     backgroundColor: Colors.PRIMARYLighter,
                     padding: 12,
                     borderRadius: 8,
-                    width: "48%", // Lebar setiap kartu agar muat 2 dalam satu baris
+                    width: "47%", // Lebar setiap kartu agar muat 2 dalam satu baris
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
@@ -140,7 +140,12 @@ export default function DaftarWisata() {
                   <Text
                     style={[
                       FontStyles.quicksandHeader2Page,
-                      { marginBottom: 4, color: Colors.PRIMARY },
+                      {
+                        marginBottom: 4,
+                        color: Colors.PRIMARY,
+                        alignSelf: "center",
+                        textAlign: "center",
+                      },
                     ]}
                   >
                     {tempat.namatempat}
