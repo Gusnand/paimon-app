@@ -214,7 +214,7 @@ export default function DaftarWisata() {
                     {/* Detail Tempat */}
                     <Text
                       style={[
-                        FontStyles.quicksandHeader2Page,
+                        FontStyles.quicksandRegular,
                         {
                           marginBottom: 4,
                           color: Colors.PRIMARY,
