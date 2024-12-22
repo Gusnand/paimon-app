@@ -3,6 +3,7 @@ import { FontStyles } from "@/constants/Fonts";
 import { supabase } from "@/utils/supabase";
 import { useRouter, useLocalSearchParams, Link } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { decode } from "base64-arraybuffer";
 import {
   View,
   Text,
@@ -19,6 +20,7 @@ import {
 } from "react-native";
 import Header from "@/components/Layout/Header";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 
 export default function CreateWisata() {
   const { lang, lat, from } = useLocalSearchParams(); // Ambil ID dari parameter URL
@@ -34,7 +36,7 @@ export default function CreateWisata() {
   const [alamat, setAlamat] = useState("");
   // like
   const [image, setImage] = useState("");
-  const [imageUri, setImageUri] = useState(null);
+  const [imageUri, setImageUri] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
   const handleSubmit = async () => {
@@ -45,14 +47,17 @@ export default function CreateWisata() {
         return;
       }
 
+      const imageData = await FileSystem.readAsStringAsync(imageUri, {
+        encoding: "base64", // Read as base64 string for easier handling
+      });
+
       // Upload image to Supabase Storage
       console.log(image);
 
       const { data, error } = await supabase.storage
         .from("tourism-images")
-        .upload(`wisata_${Date.now()}.jpg`, {
-          uri: image,
-          mimeType: "image/jpeg",
+        .upload(`wisata_${Date.now()}.jpg`, decode(imageData), {
+          contentType: "image/jpeg",
         });
 
       if (error) {
@@ -61,7 +66,7 @@ export default function CreateWisata() {
         return;
       }
 
-      setImageUrl(data.path); // Store the uploaded image URL
+      console.log(data);
 
       // Insert data into database with image URL
       const { data: wisataData, error: dbError } = await supabase
@@ -72,7 +77,9 @@ export default function CreateWisata() {
             detail,
             region,
             alamat,
-            image: data.path,
+            image:
+              "https://podyhkevztlgeushefwk.supabase.co/storage/v1/object/public/" +
+              data.fullPath,
             latitude: lat,
             longitude: lang,
             view: 1,
@@ -106,6 +113,8 @@ export default function CreateWisata() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      const { uri } = result.assets[0]; // Extract the URI directly
+      setImageUri(uri);
     }
   };
 
