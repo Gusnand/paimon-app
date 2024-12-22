@@ -31,7 +31,7 @@ export default function DetailWisata() {
   async function fetchDetailWisata() {
     const { data, error } = await supabase
       .from("daftarwisata")
-      .select("id, namawisata, image, detail, region, view, alamat")
+      .select("id, namawisata, image, detail, region, view, alamat, like")
       .eq("id", id)
       .single();
 
@@ -53,8 +53,8 @@ export default function DetailWisata() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <TouchableOpacity
+    <View style={{ flex: 1, marginBottom: 24 }}>
+      <View
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -63,8 +63,11 @@ export default function DetailWisata() {
         }}
       >
         <Header headerText="Kembali" withBackButton linkHref={"/home"} />
-      </TouchableOpacity>
-      <ScrollView style={{ flex: 1, padding: 24, backgroundColor: "#fff" }}>
+      </View>
+      <ScrollView
+        style={{ flex: 1, padding: 24, backgroundColor: "#fff" }}
+        contentContainerStyle={{ paddingBottom: 42 }}
+      >
         <View
           style={{ paddingTop: 8, paddingBottom: 8, paddingHorizontal: 12 }}
         >
