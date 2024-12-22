@@ -104,6 +104,26 @@ export default function destination() {
   const [fetchError, setFetchError] = useState("");
   const [destinations, setDestinations] = useState<any>([]);
 
+  //new marker
+  const [newMarker, setNewMarker] = useState({});
+
+  const handleMapPress = (event: any) => {
+    if (user?.lastName === "admin") {
+      const { latitude, longitude } = event.nativeEvent.coordinate;
+      setNewMarker({ latitude, longitude });
+      setSelectedDestination({
+        id: -1, // Tambahkan ID
+        image: "",
+        namawisata: "Tempat belum terdaftar",
+        detail: "latitude: " + latitude + ", longitude: " + longitude,
+        latitude: latitude,
+        longitude: longitude,
+      });
+      setShowDestinationModal(true); // Open modal for new marker
+      console.log(newMarker);
+    }
+  };
+
   return (
     <>
       {!isLoading ? (
@@ -112,7 +132,7 @@ export default function destination() {
           <View style={{ margin: 24 }}>
             <Header
               headerText={`${
-                user?.lastName == "admin" ? "Wisata Admin" : "Admin"
+                user?.lastName == "admin" ? "Wisata Admin" : "Wisata"
               }`}
             />
           </View>
@@ -126,6 +146,7 @@ export default function destination() {
               showsUserLocation
               showsMyLocationButton
               // onRegionChange={onRegionChange}
+              onPress={handleMapPress}
               initialRegion={
                 currentLocation || {
                   latitude: 37.78825,
@@ -183,11 +204,21 @@ export default function destination() {
                     marginTop: 8,
                   }}
                 >
-                  <Link href={`/detail-wisata?id=${selectedDestination.id}`}>
-                    <Text style={FontStyles.quicksandButtonPrimary}>
-                      Detail
-                    </Text>
-                  </Link>
+                  {selectedDestination.id == -1 ? (
+                    <Link
+                      href={`/create-wisata?lat=${selectedDestination.latitude}&long=${selectedDestination.longitude}`}
+                    >
+                      <Text style={FontStyles.quicksandButtonPrimary}>
+                        Daftar
+                      </Text>
+                    </Link>
+                  ) : (
+                    <Link href={`/detail-wisata?id=${selectedDestination.id}`}>
+                      <Text style={FontStyles.quicksandButtonPrimary}>
+                        Detail
+                      </Text>
+                    </Link>
+                  )}
                 </TouchableOpacity>
                 {user?.lastName == "admin" ? (
                   <TouchableOpacity
