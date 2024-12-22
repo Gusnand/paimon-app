@@ -12,6 +12,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import RegionIcon from "@/assets/icons/regionIcon.svg";
+import LikesIcon from "@/assets/icons/likesIcon.svg";
+import ViewsIcon from "@/assets/icons/viewsIcon.svg";
 
 export default function DetailWisata() {
   const { id } = useLocalSearchParams(); // Ambil ID dari parameter URL
@@ -86,7 +88,7 @@ export default function DetailWisata() {
             </Text>
           </View>
           <View style={{ alignItems: "center", width: "33%" }}>
-            <RegionIcon style={{ marginBottom: 8 }} />
+            <ViewsIcon style={{ marginBottom: 8 }} />
             <Text style={[FontStyles.quicksandMedium, { marginBottom: 2 }]}>
               Dilihat
             </Text>
@@ -95,7 +97,7 @@ export default function DetailWisata() {
             </Text>
           </View>
           <View style={{ alignItems: "center", width: "33%" }}>
-            <RegionIcon style={{ marginBottom: 8 }} />
+            <LikesIcon style={{ marginBottom: 8 }} />
             <Text style={[FontStyles.quicksandMedium, { marginBottom: 2 }]}>
               Disukai
             </Text>
