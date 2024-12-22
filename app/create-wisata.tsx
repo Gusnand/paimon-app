@@ -21,6 +21,7 @@ import {
 import Header from "@/components/Layout/Header";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function CreateWisata() {
   const { lang, lat, from } = useLocalSearchParams(); // Ambil ID dari parameter URL
@@ -123,7 +124,7 @@ export default function CreateWisata() {
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
         marginHorizontal: 24,
       }}
     >
@@ -181,9 +182,29 @@ export default function CreateWisata() {
           gap: 12,
         }}
       /> */}
-      <View style={styles.container}>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        {image && <Image source={{ uri: image }} style={styles.image} />}
+      <View style={{ display: "flex", gap: 4 }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: Colors.PRIMARY,
+            paddingHorizontal: 16,
+            paddingVertical: 12,
+            borderRadius: 12,
+            marginBottom: 12,
+            display: "flex",
+            flexDirection: "row",
+            gap: 12,
+          }}
+          onPress={pickImage}
+        >
+          <Text style={[FontStyles.quicksandButtonPrimary]}>Unggah Gambar</Text>
+          <MaterialIcons name="upload" size={24} color={"white"} />
+        </TouchableOpacity>
+        {image && (
+          <Image
+            source={{ uri: image }}
+            style={{ width: 327, height: 194, marginBottom: 12 }}
+          />
+        )}
       </View>
       <TextInput
         autoCapitalize="none"
@@ -263,14 +284,14 @@ export default function CreateWisata() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    width: 200,
-    height: 200,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   image: {
+//     width: 200,
+//     height: 200,
+//   },
+// });

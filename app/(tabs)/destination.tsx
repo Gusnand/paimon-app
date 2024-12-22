@@ -157,6 +157,15 @@ export default function destination() {
               }
             >
               {showDestinations()}
+              {selectedDestination.id == -1 && (
+                <Marker
+                  coordinate={{
+                    latitude: selectedDestination.latitude,
+                    longitude: selectedDestination.longitude,
+                  }}
+                  pinColor="blue"
+                />
+              )}
             </MapView>
           </View>
           {showDestinationModal && (
