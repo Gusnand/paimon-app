@@ -206,7 +206,7 @@ export default function destination() {
                 >
                   {selectedDestination.id == -1 ? (
                     <Link
-                      href={`/create-wisata?lat=${selectedDestination.latitude}&long=${selectedDestination.longitude}`}
+                      href={`/create-wisata?lat=${selectedDestination.latitude}&lang=${selectedDestination.longitude}`}
                     >
                       <Text style={FontStyles.quicksandButtonPrimary}>
                         Daftar
