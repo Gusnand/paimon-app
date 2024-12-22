@@ -220,7 +220,7 @@ export default function destination() {
                     </Link>
                   )}
                 </TouchableOpacity>
-                {user?.lastName == "admin" ? (
+                {user?.lastName == "admin" && selectedDestination.id != -1 ? (
                   <TouchableOpacity
                     style={{
                       backgroundColor: "white",

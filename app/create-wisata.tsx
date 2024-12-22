@@ -40,8 +40,8 @@ export default function CreateWisata() {
   const handleSubmit = async () => {
     try {
       // Validate inputs
-      if (!namawisata || !detail || !region || !alamat) {
-        Alert.alert("Error", "Please fill in all fields.");
+      if (!namawisata || !detail || !region || !alamat || !image) {
+        Alert.alert("Error", "Tolong lengkapi semua kolom!");
         return;
       }
 
