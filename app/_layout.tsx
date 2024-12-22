@@ -40,7 +40,31 @@ export default function RootLayout() {
     return (
       <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
         <ClerkLoaded>
-          <Slot />
+          <SignedIn>
+            {/* Gunakan Stack untuk navigasi */}
+            <Stack
+              screenOptions={{
+                headerShown: true, // Atur sesuai kebutuhan
+              }}
+            >
+              <Stack.Screen
+                name="(tabs)" // Navigasi untuk halaman utama
+                options={{
+                  headerShown: false, // Sembunyikan header di halaman utama (tab navigasi)
+                }}
+              />
+              <Stack.Screen
+                name="detail-wisata" // Navigasi untuk halaman Detail Wisata
+                options={{
+                  title: "Detail Wisata", // Judul header halaman Detail Wisata
+                }}
+              />
+            </Stack>
+          </SignedIn>
+          <SignedOut>
+            {/* Halaman login untuk user yang belum masuk */}
+            <LoginScreen />
+          </SignedOut>
         </ClerkLoaded>
       </ClerkProvider>
     );
