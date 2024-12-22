@@ -11,10 +11,10 @@ import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { supabase } from "@/utils/supabase";
 
-export default function DaftarWisata() {
-  const router = useRouter();
-  const [dataDaftarWisata, setDataDaftarWisata] = useState<any[]>([]);
+export default function DaftarWisata({ searchField }) {
+  const [dataDaftarWisata, setDataDaftarWisata] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -22,10 +22,11 @@ export default function DaftarWisata() {
       const { data, error } = await supabase
         .from("daftarwisata")
         .select("region, image, namawisata, id");
+
       if (error) {
         console.error("Error fetching data dari Supabase:", error);
       } else {
-        const groupedData = data.reduce((acc: any, item) => {
+        const groupedData = data.reduce((acc, item) => {
           const { region, ...rest } = item;
           if (acc[region]) {
             acc[region].push(rest);
@@ -45,12 +46,18 @@ export default function DaftarWisata() {
       }
       setLoading(false);
     }
+
     fetchData();
   }, []);
 
-  function handlePress(id: number) {
-    router.push(`/detail-wisata?id=${id}`);
-  }
+  const filteredData = dataDaftarWisata
+    .map((regionObj) => ({
+      ...regionObj,
+      wisata: regionObj.wisata.filter((tempat) =>
+        tempat.namawisata.toLowerCase().includes(searchField.toLowerCase())
+      ),
+    }))
+    .filter((regionObj) => regionObj.wisata.length > 0);
 
   if (loading) {
     return (
@@ -66,14 +73,8 @@ export default function DaftarWisata() {
         Daftar Wisata
       </Text>
       <View style={{ display: "flex", gap: 16 }}>
-        {dataDaftarWisata.map((regionObj, index) => (
-          <View
-            key={index}
-            style={{
-              marginBottom: 24,
-            }}
-          >
-            {/* Nama Kabupaten */}
+        {filteredData.map((regionObj, index) => (
+          <View key={index} style={{ marginBottom: 24 }}>
             <Text
               style={[
                 FontStyles.quicksandHeader2Page,
@@ -82,20 +83,18 @@ export default function DaftarWisata() {
             >
               {regionObj.region}
             </Text>
-
-            {/* List Wisata */}
             <View
               style={{
                 flexDirection: "row",
-                flexWrap: "wrap", // Untuk memungkinkan kartu membuat baris baru
-                justifyContent: "space-between", // Memberi ruang antara kartu
+                flexWrap: "wrap",
+                justifyContent: "space-between",
                 gap: 16,
               }}
             >
-              {regionObj.wisata.map((tempat: any, tempatIndex: number) => (
+              {regionObj.wisata.map((tempat, tempatIndex) => (
                 <TouchableWithoutFeedback
                   key={tempatIndex}
-                  onPress={() => handlePress(tempat.id)} // Navigasi ke halaman detail
+                  onPress={() => router.push(`/detail-wisata?id=${tempat.id}`)}
                 >
                   <View
                     style={{
@@ -108,13 +107,12 @@ export default function DaftarWisata() {
                       gap: 8,
                     }}
                   >
-                    {/* Gambar Tempat */}
                     <Image
                       source={
                         typeof tempat.image === "string" &&
                         tempat.image.trim() !== ""
                           ? { uri: tempat.image }
-                          : require("@/assets/images/tourism/1.pantaikuta.jpg") // Gambar default jika image tidak valid
+                          : require("@/assets/images/tourism/1.pantaikuta.jpg")
                       }
                       style={{
                         width: "100%",
@@ -122,8 +120,6 @@ export default function DaftarWisata() {
                         borderRadius: 8,
                       }}
                     />
-
-                    {/* Detail Tempat */}
                     <Text
                       style={[
                         FontStyles.quicksandRegular,

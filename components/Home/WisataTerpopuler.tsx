@@ -5,10 +5,9 @@ import { Colors } from "@/constants/Colors";
 import { supabase } from "@/utils/supabase"; // Pastikan path ke Supabase sesuai
 import { router, useRouter } from "expo-router";
 
-export default function WisataTerpopuler() {
+export default function WisataTerpopuler({ searchField }) {
   const [popularWisata, setPopularWisata] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -37,6 +36,10 @@ export default function WisataTerpopuler() {
     fetchPopularWisata();
   }, []);
 
+  const filteredWisata = popularWisata.filter((wisata) =>
+    wisata.namawisata.toLowerCase().includes(searchField.toLowerCase())
+  );
+
   if (loading) {
     return (
       <View
@@ -51,7 +54,7 @@ export default function WisataTerpopuler() {
     );
   }
 
-  if (!popularWisata.length) {
+  if (!filteredWisata.length) {
     return (
       <View
         style={{
@@ -67,20 +70,16 @@ export default function WisataTerpopuler() {
     );
   }
 
-  function handlePress(id: number) {
-    router.push(`/detail-wisata?id=${id}`);
-  }
-
   return (
     <View style={{ marginVertical: 24 }}>
       <Text style={[FontStyles.quicksandHeader2Page, { marginBottom: 16 }]}>
         Wisata Terpopuler
       </Text>
       <View style={{ display: "flex", gap: 16 }}>
-        {popularWisata.map((wisata, wisataIndex: number) => (
+        {filteredWisata.map((wisata, wisataIndex) => (
           <TouchableOpacity
             key={wisataIndex}
-            onPress={() => handlePress(wisata.id)}
+            onPress={() => router.push(`/detail-wisata?id=${wisata.id}`)}
             style={{
               paddingHorizontal: 16,
               paddingVertical: 24,

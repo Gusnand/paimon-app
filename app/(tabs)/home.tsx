@@ -14,10 +14,9 @@ import WisataTerpopuler from "@/components/Home/WisataTerpopuler";
 import DaftarWisata from "@/components/Home/DaftarWisata";
 import { supabase } from "@/utils/supabase";
 
-export default function home() {
+export default function Home() {
   const [searchSelected, setSearchSelected] = useState(false);
   const [searchField, setSearchField] = useState("");
-  // console.log(supabase);
 
   return (
     <ScrollView
@@ -25,7 +24,7 @@ export default function home() {
       contentContainerStyle={{ paddingBottom: 24 }}
       showsVerticalScrollIndicator={false}
     >
-      {/* header */}
+      {/* Header */}
       <Header headerText="Home" />
       <View
         style={{
@@ -38,16 +37,14 @@ export default function home() {
           marginVertical: 10,
           marginTop: 16,
           borderRadius: 12,
-          borderWidth: searchSelected ? 2 : 0, // Conditional borderWidth
+          borderWidth: searchSelected ? 2 : 0,
           borderColor: Colors.PRIMARY,
           borderStyle: "solid",
         }}
       >
         <MaterialIcons name="search" size={24} color={Colors.PRIMARY} />
         <TextInput
-          onFocus={() => {
-            setSearchSelected(true);
-          }}
+          onFocus={() => setSearchSelected(true)}
           onBlur={() => setSearchSelected(false)}
           placeholder="Cari destinasi wisata..."
           style={[FontStyles.quicksand14Color, { width: "100%" }]}
@@ -56,11 +53,11 @@ export default function home() {
         />
       </View>
 
-      {/* statistik */}
-      <WisataTerpopuler />
+      {/* Statistik */}
+      <WisataTerpopuler searchField={searchField} />
 
-      {/* daftar wisata */}
-      <DaftarWisata />
+      {/* Daftar Wisata */}
+      <DaftarWisata searchField={searchField} />
     </ScrollView>
   );
 }
