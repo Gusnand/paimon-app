@@ -6,7 +6,7 @@ import MapView, { Callout, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { FontStyles } from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { supabase } from "@/utils/supabase";
 
 export default function destination() {
@@ -14,6 +14,7 @@ export default function destination() {
   const [isLoading, setIsLoading] = useState(false);
   const [showDestinationModal, setShowDestinationModal] = useState(false);
   const [selectedDestination, setSelectedDestination] = useState({
+    id: 0,
     image: require("../../assets/images/tourism/3.bajrasandhi.jpg"),
     namawisata: "",
     detail: "",
@@ -51,7 +52,9 @@ export default function destination() {
     const getDestinations = async () => {
       setIsLoading(true);
       getLocation();
-      const { data, error } = await supabase.from("daftarwisata").select();
+      const { data, error } = await supabase
+        .from("daftarwisata")
+        .select("id, image, namawisata, detail, latitude, longitude");
 
       if (error) {
         setFetchError("Could not fetch from database");
@@ -78,7 +81,14 @@ export default function destination() {
       return (
         <Marker
           onPress={() => {
-            setSelectedDestination(destination);
+            setSelectedDestination({
+              id: destination.id, // Tambahkan ID
+              image: destination.image,
+              namawisata: destination.namawisata,
+              detail: destination.detail,
+              latitude: destination.latitude,
+              longitude: destination.longitude,
+            });
             setShowDestinationModal(true);
           }}
           key={index}
@@ -173,7 +183,7 @@ export default function destination() {
                     marginTop: 8,
                   }}
                 >
-                  <Link href={"/home"}>
+                  <Link href={`/detail-wisata?id=${selectedDestination.id}`}>
                     <Text style={FontStyles.quicksandButtonPrimary}>
                       Detail
                     </Text>
